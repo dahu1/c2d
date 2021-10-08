@@ -19,7 +19,7 @@ def test_number_itn():
     ]
     
     for i, item in enumerate(inputText):
-        predict = itn_tool.takeChineseNumberFromString(item)['replacedText']
+        predict = itn_tool.preTakeChineseNumberFromString(item)['replacedText']
         assert target[i] == predict
 
 
@@ -40,7 +40,7 @@ def test_number_nochange():
     ]
     
     for i, item in enumerate(inputText):
-        predict = itn_tool.takeChineseNumberFromString(item)['replacedText']
+        predict = itn_tool.preTakeChineseNumberFromString(item)['replacedText']
         assert target[i] == predict
 
 
@@ -55,7 +55,7 @@ def test_symbol_itn():
     ]
     
     for i, item in enumerate(inputText):
-        predict = itn_tool.takeChineseNumberFromString(item)['replacedText']
+        predict = itn_tool.preTakeChineseNumberFromString(item)['replacedText']
         assert target[i] == predict
 
 ## zh_cn：汉字符号最好不转的一些case
@@ -71,7 +71,7 @@ def test_symbol_nochange():
     ]
     
     for i, item in enumerate(inputText):
-        predict = itn_tool.takeChineseNumberFromString(item)['replacedText']
+        predict = itn_tool.preTakeChineseNumberFromString(item)['replacedText']
         assert target[i] == predict
 
 ## zh_cn：日期要转的一些case
@@ -91,7 +91,7 @@ def test_symbol_riqi():
     ]
     
     for i, item in enumerate(inputText):
-        predict = itn_tool.takeChineseNumberFromString(item)['replacedText']
+        predict = itn_tool.preTakeChineseNumberFromString(item)['replacedText']
         assert target[i] == predict
 
 ## zh_cn：时间要转的一些case
@@ -107,7 +107,7 @@ def test_symbol_time():
     ]
     
     for i, item in enumerate(inputText):
-        predict = itn_tool.takeChineseNumberFromString(item)['replacedText']
+        predict = itn_tool.preTakeChineseNumberFromString(item)['replacedText']
         assert target[i] == predict
 
 ## zh_cn：四则运算要转的一些case
@@ -131,7 +131,7 @@ def test_symbol_sizeyunsuan():
     ]
     
     for i, item in enumerate(inputText):
-        predict = itn_tool.takeChineseNumberFromString(item)['replacedText']
+        predict = itn_tool.preTakeChineseNumberFromString(item)['replacedText']
         assert target[i] == predict
 
 ## zh_cn：带有一些单位
@@ -168,7 +168,7 @@ def test_symbol_danwei():
     ]
     
     for i, item in enumerate(inputText):
-        predict = itn_tool.takeChineseNumberFromString(item)['replacedText']
+        predict = itn_tool.preTakeChineseNumberFromString(item)['replacedText']
         assert target[i] == predict
 
 
@@ -195,6 +195,6 @@ def test_symbol_norm_badcase():
     ]
     
     for i, item in enumerate(inputText):
-        predict = itn_tool.takeChineseNumberFromString(item)['replacedText']
+        predict = itn_tool.preTakeChineseNumberFromString(item)['replacedText']
         assert target[i] == predict
 

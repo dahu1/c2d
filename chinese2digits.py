@@ -4,6 +4,11 @@ debug = 0
 if debug:
     print('>> In debug model ')
 
+class ItnError(Exception):
+    def __init__(self, value):
+        self.value = value
+    def __str__(self):
+        return repr(self.value)
 
 class itn:
     def __init__(self):
@@ -447,7 +452,16 @@ class itn:
             newChineseNumberList.append(newChNumberString)
         return newChineseNumberList
 
-    def takeChineseNumberFromString(self, chText, traditionalConvert=True, verbose=False, *args, **kwargs):
+    def takeChineseNumberFromString(self, chText):
+        try:
+            a = self.preTakeChineseNumberFromString(chText)['replacedText']
+        except Exception as e: 
+            a = chText
+            raise ItnError('oops!')
+        finally:
+            return a
+
+    def preTakeChineseNumberFromString(self, chText, traditionalConvert=True, verbose=False, *args, **kwargs):
         """
         :param chText: chinese string
         :param traditionalConvert: Switch to convert the Traditional Chinese character to Simplified chinese
@@ -604,7 +618,7 @@ class itn:
 
     def process(self, recog_seqs):
         for item in recog_seqs:
-            item.result = self.takeChineseNumberFromString(item.result)['replacedText']
+            item.result = self.takeChineseNumberFromString(item.result)
 
     # xuecheng 新加规则  :  支持科学计数法，   十四点二乘以十的九次方 ->   14.2*10^9
     def scientific_count(self, x):
@@ -717,7 +731,7 @@ class itn:
                 # if len(a) < 2 and not re.search('[0-9]', a):
                 #     a = self.chineseToDigits(a)
                 # else:
-                #     a = self.takeChineseNumberFromString(a)['replacedText']
+                #     a = self.preTakeChineseNumberFromString(a)['replacedText']
 
                 b = danwei_fuhao[danwei_list.index(b)] if b else b
                 c = danwei_fuhao[danwei_list.index(c)] if c else c
@@ -742,7 +756,7 @@ class itn:
                 # if len(a) < 2 and not re.search('[0-9]', a):
                 #     a = self.chineseToDigits(a)
                 # else:
-                #     a = self.takeChineseNumberFromString(a)['replacedText']
+                #     a = self.preTakeChineseNumberFromString(a)['replacedText']
 
             if re.search('[0-9]', a):
                 c = danwei_fuhao[danwei_list.index(c)] if c else c
@@ -1130,14 +1144,16 @@ if __name__ == '__main__':
     # s.extend(['二零一九年三月', '九点三十分', '十分钟', '茅台跌到一千八', '海拔两千七百米'])
     # s.extend(['一八年九月','二零二一年十一月','二一年三月','零八年十月十一号','二零二一年一月十号'])
     s.extend(['十点零三', '八点半', '现在九点三十分', '二十一点三十九分'])
-    s = ['现在九点二十三分']
-    s = ['一百二十万']
-    s = ['再加一点','同比减少百分之三十四毛利']
+    # s = ['现在九点二十三分']
+    # s = ['一百二十万']
+    # s = ['再加一点','同比减少百分之三十四毛利']
+    s = ['二加二等于四三加三等于','一百二十万']
     # s = ['七月二十三号,七月二十几号']
 
     j = 0
     for i in s:
-        print("\""+a.takeChineseNumberFromString(i)['replacedText']+"\",", end="   ")
+        print("\""+a.preTakeChineseNumberFromString(i)['replacedText']+"\",", end="   ")
+        print("\""+a.takeChineseNumberFromString(i)+"\",", end="   ")
         j += 1
         if j % 4 == 0:
             print('')
