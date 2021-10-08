@@ -2,6 +2,8 @@
 
 ##  chinese 2 digits use python language.
 
+### forked from https://github.com/Wall-ee/chinese2digits
+
 * example 
 
 ```
